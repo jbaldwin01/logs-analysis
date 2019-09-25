@@ -7,14 +7,17 @@ This reporting tool is a Python program using the psycopg2 module to connect to 
 
 [Project rubric](https://review.udacity.com/#!/rubrics/277/view)
 
-## Program name:
-  project-logs.py
+## Program name
+  logs-analysis.py
 
 ## Project Dependencies
 
-1 log_requests view:
+1. [Full Stack Nanodegree virtual machine](https://github.com/jbaldwin01/fullstack-nanodegree-vm)
+2. PostgreSQL database
+3. [news](https://d17h27t6h515a5.cloudfront.net/topher/2016/August/57b5f748_newsdata/newsdata.zip) data
+4. Database view log_requests:
 ```sql
-create view log_requests as
+CREATE VIEW log_requests AS
 SELECT date(log."time") AS date,
     count(log."time") AS requests
    FROM log
@@ -22,9 +25,9 @@ SELECT date(log."time") AS date,
   ORDER BY (date(log."time"));
 ```
 
-2 error_stats view:
+5. Database view error_stats:
 ```sql
-create view log_requests as
+CREATE VIEW log_requests AS
 SELECT date(log."time") AS date,
     count(log."time") AS requests
    FROM log
