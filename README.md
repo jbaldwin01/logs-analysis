@@ -18,21 +18,21 @@ This reporting tool is a Python program using the psycopg2 module to connect to 
 4. Database view log_requests:
 ```sql
 CREATE VIEW log_requests AS
-SELECT date(log."time") AS date,
-    count(log."time") AS requests
+SELECT DATE(log."time") AS date,
+    COUNT(log."time") AS requests
    FROM log
-  GROUP BY (date(log."time"))
-  ORDER BY (date(log."time"));
+  GROUP BY (DATE(log."time"))
+  ORDER BY (DATE(log."time"));
 ```
 
 5. Database view error_stats:
 ```sql
-CREATE VIEW log_requests AS
-SELECT date(log."time") AS date,
-    count(log."time") AS requests
-   FROM log
-  GROUP BY (date(log."time"))
-  ORDER BY (date(log."time"));
+CREATE VIEW error_stats AS
+SELECT DATE(time) AS date, COUNT(time) AS errors, requests, COUNT(time)/CAST(requests AS FLOAT)*100 AS error_percentage
+FROM log JOIN log_requests ON DATE(time) = log_requests.date
+WHERE status != '200 OK' -- errors
+GROUP BY DATE(time), requests
+ORDER BY DATE(time);
 ```
 
 ## Running the program
