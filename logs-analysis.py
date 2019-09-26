@@ -1,10 +1,17 @@
 #!/usr/bin/env python3
 
 import psycopg2
+import sys
 
 DBNAME = "news"
 
-dbconn = psycopg2.connect(database=DBNAME)
+try:
+    dbconn = psycopg2.connect(database=DBNAME)
+except psycopg2.Error as e:
+    print("Unable to connect to the database")
+    print(e.pgerror)
+    print(e.diag.message_detail)
+    sys.exit(1)
 c = dbconn.cursor()
 query1 = """select title, count(path) as views
 from articles
